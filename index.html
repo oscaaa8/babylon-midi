@@ -6,7 +6,9 @@
 
     <title>MIDI Arrays + Objects</title>
     <!--MIDI Library, see reference here: https://www.smashingmagazine.com/2018/03/web-midi-api/-->
-    <script src="./scripts/webmidi.iife.js"></script>
+    <!--<script src="./scripts/webmidi.iife.js"></script>-->
+    
+    <script src="https://cdn.jsdelivr.net/npm/webmidi@latest/dist/iife/webmidi.iife.js"></script>
 
     <!-- Babylon.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
@@ -47,15 +49,18 @@
             height: 100%;
             touch-action: none;
         }
-        h1{position:fixed; top: 40%; left: 40px; color: '#ffffff'; z-index:1000}
+        h1{position:fixed; top: 30%; left: 40px; color: '#00A36C'; z-index:1000}
     </style>
 </head>
 
+
 <body>
     <h1 id = 'txt'> Click to begin! </h1>
+    <header id = 'text' > "This_is_a_circle - This_is_a_circle - This_is_a_circle - This_is_a_circle - This_is_a_circle -   This_is_a_circle - This_is_a_circle - This_is_a_circle - This_is_a_circle - This_is_a_circle - This_is_a_circle - This_is_a_circle - A_Circle" </header>
     <canvas id="renderCanvas">
 
     </canvas>
+
 
     <script src="sketch.js"> </script>
 </body>
