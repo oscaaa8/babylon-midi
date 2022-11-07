@@ -1,28 +1,38 @@
 //https://editor.p5js.org/howshekilledit/sketches/P00w6cEmL
 let piano_init = false;
 
+let color_list = {color1:'#9966cc', color2:'#13B3AC', color3:'#918a82'};
 //default function plays note on keypress
+let synth;
+let spheres = {};
+let notes = ['C' , 'D', 'E', 'F', 'G' , 'A', 'B'];
 
 function triggerNote(note, midi = true) {
     if (piano_init == false) {
         Tone.start();
+
         console.log('start');
         piano_init = true;
     }
     //you can add your own functionality here.
+    //spheres created
+
+
+
 
     //displays note name in browser (you can remove this line)
     document.getElementById('txt').innerText = note.name + note.octave;
 
     //play note using appropriate function given input type
-    if (midi) { //midi keyboard input
-        try {
-            playNote(note.name + note.octave);
-        } catch { }
-    } else { //regular keyboard input
-        synth.triggerAttack(note.name + note.octave);
-    }
-
+    
+    // if (midi) { //midi keyboard input
+    //     try {
+    //         playNote(note.name + note.octave);
+    //     } catch { }
+    // } else { //regular keyboard input
+    //     synth.triggerAttack(note.name + note.octave);
+    // }
+     synth.triggerAttack(note.name + note.octave);
 
     //Show what we are receiving
     console.log(
@@ -70,6 +80,7 @@ document.getElementById('renderCanvas').onclick = function () {
 function keyPressed() {
     console.log(keyCode);
     triggerNote(keynotes[keyCode], false);
+    
 }
 function keyReleased() {
     console.log(keyCode);
@@ -77,18 +88,55 @@ function keyReleased() {
 }
 
 
+
+
+//SETUP
+
+
+
+
+
+
 function setup() {
     noLoop();
-    //color background white
-    scene.clearColor = new BABYLON.Color3.FromHexString('#ffffff');
-
+    //color background 
+    scene.clearColor = new BABYLON.Color3.FromHexString(color_list.color2);
     //initialize camera
-    var camera = new BABYLON.ArcRotateCamera("Camera", 3 * Math.PI / 2, Math.PI / 4, 100, BABYLON.Vector3.Zero(), scene);
+    var camera = new BABYLON.ArcRotateCamera("Camera", 3 * Math.PI / 2, Math.PI / 4, 80, BABYLON.Vector3.Zero(), scene);
     camera.attachControl(canvas, true);
-
     //initialize light
     var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
     light.intensity = 1;
+
+    //const knot = BABYLON.Mesh.CreateTorusKnot("knot", radius = 8, tube = 2, radialSegments= 9, tubularSegments= 5, p = 3, q = 3, scene, updatable, sideOrientation);
+
+
+
+
+
+
+    //spheres[n] = createSphere(i-3, 0, -2, 1);
+    
+    for(let [i, n] of notes.entries()){
+        
+        //sphere creation
+        spheres[n] = createSphere(3, 0, -2, 40);
+        var mat = new BABYLON.color1('mat', scence);
+
+        //color sphere on gradient 
+       mat.diffuseColor = babLerpColor(
+            colors.start_clr, colors.end_clr,i/notes.length, scene);
+            spheres[n].material = mat;
+
+            
+    }
+
+
+
+
+
+
+
 
 
     synth = new Tone.PolySynth(Tone.MonoSynth, {
